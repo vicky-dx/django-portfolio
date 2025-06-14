@@ -4,6 +4,7 @@ __pycache__/
 *.pyo
 *.pyd
 *.py.class
+.env
 
 # SQLite database files
 *.sqlite3
