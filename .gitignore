@@ -1,0 +1,12 @@
+# Bytecode files
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.py.class
+
+# SQLite database files
+*.sqlite3
+
+# virtual environment directories
+venv/

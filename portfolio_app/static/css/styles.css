@@ -1,0 +1,59 @@
+body {
+    font-family: 'Sora', sans-serif;
+    background-color: #111827;
+    /* Gray 900 */
+    color: #d1d5db;
+    /* Gray 300 */
+}
+
+.text-accent {
+    color: #818cf8;
+}
+
+/* Indigo 400 */
+.bg-accent {
+    background-color: #818cf8;
+}
+
+.header-scrolled {
+    background-color: rgba(17, 24, 39, 0.8);
+    backdrop-filter: blur(10px);
+}
+
+.project-card,
+.skill-card {
+    background-color: #1f2937;
+    /* Gray 800 */
+    transition: all 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 30px -15px rgba(129, 140, 248, 0.2);
+}
+
+.skill-card:hover {
+    background-color: #374151;
+    /* Gray 700 */
+}
+
+.typing-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.1em;
+    background-color: #818cf8;
+    animation: blink 0.8s infinite;
+    margin-left: 4px;
+}
+
+@keyframes blink {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+    }
+}
