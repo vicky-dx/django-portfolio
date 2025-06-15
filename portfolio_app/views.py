@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Profile, Project, Experience, Skill
+from .models import AdditionalTech, Profile, Project, Experience, Skill
 
 import os
 from django.contrib.auth.models import User
@@ -10,15 +10,15 @@ from django.http import HttpResponse
 def portfolio_view(request):
     """
     This view fetches all the necessary data from the database,
-    including the new Profile information.
+    including the new Profile and AdditionalTech information.
     """
     # Fetch all objects from the database.
     projects = Project.objects.all()
     experiences = Experience.objects.all()
     skills = Skill.objects.all()
+    additional_technologies = AdditionalTech.objects.all()
     
-    # Fetch the first Profile object. There should only be one.
-    # Using .first() prevents an error if the profile hasn't been created yet.
+    # Fetch the first Profile object.
     profile = Profile.objects.first()
 
     # The context dictionary passes all data to the template.
@@ -27,6 +27,7 @@ def portfolio_view(request):
         'projects': projects,
         'experiences': experiences,
         'skills': skills,
+        'additional_technologies': additional_technologies,
     }
     
     # Render the request with the template and the context data.

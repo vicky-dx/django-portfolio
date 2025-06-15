@@ -3,7 +3,6 @@ from django.db import models
 class Profile(models.Model):
     """
     A singleton model to store personal information and site-wide settings.
-    (Updated to include phone and location for the new design)
     """
     name = models.CharField(max_length=100)
     photo_url = models.URLField(blank=True, help_text="A URL to your profile picture (e.g., from a CDN or another site).")
@@ -23,10 +22,6 @@ class Profile(models.Model):
         return self.name
 
 class Experience(models.Model):
-    """
-    Model to store a single work experience entry.
-    (Updated to include summary and location)
-    """
     title = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
     company_url = models.URLField(blank=True, null=True)
@@ -38,16 +33,12 @@ class Experience(models.Model):
     display_order = models.PositiveIntegerField(default=0, help_text="Experiences with lower numbers will appear first.")
     
     class Meta:
-        ordering = ['-start_date'] # Show the most recent experience first
+        ordering = ['-start_date']
 
     def __str__(self):
         return f"{self.title} at {self.company}"
 
     def get_description_points(self):
-        """
-        Splits the description text into a list of points.
-        Useful for creating bullet points in the template.
-        """
         return self.description.strip().split('\n')
 
 class Skill(models.Model):
@@ -56,6 +47,20 @@ class Skill(models.Model):
     display_order = models.PositiveIntegerField(default=0)
 
     class Meta:
+        ordering = ['display_order']
+
+    def __str__(self):
+        return self.name
+
+class AdditionalTech(models.Model):
+    """
+    Model for technologies listed in the 'Additional Technologies' section.
+    """
+    name = models.CharField(max_length=50)
+    display_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        verbose_name_plural = "Additional Technologies"
         ordering = ['display_order']
 
     def __str__(self):
