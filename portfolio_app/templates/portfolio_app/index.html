@@ -1,19 +1,17 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% if profile %}
-    <title>{{ profile.name }} - Senior Data Engineer</title>
-    <meta name="description"
-        content="Senior Data Engineer specializing in scalable data pipelines, cloud architecture, and data infrastructure. Building the future of data-driven solutions." />
+        <title>{{ profile.name }} - Senior Data Engineer</title>
+        <meta name="description" content="Senior Data Engineer specializing in scalable data pipelines, cloud architecture, and data infrastructure. Building the future of data-driven solutions." />
     {% else %}
-    <title>Data Engineer Portfolio</title>
-    <meta name="description" content="Professional Data Engineer Portfolio" />
+        <title>Data Engineer Portfolio</title>
+        <meta name="description" content="Professional Data Engineer Portfolio" />
     {% endif %}
-
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
@@ -41,27 +39,25 @@
             },
         }
     </script>
-
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
         body {
             font-family: 'Inter', sans-serif;
         }
-
+        
         .font-space-grotesk {
             font-family: 'Space Grotesk', sans-serif;
         }
-
+        
         .font-mono {
             font-family: 'JetBrains Mono', monospace;
         }
-
+        
         /* Particle Background */
         #particle-canvas {
             position: fixed;
@@ -72,7 +68,7 @@
             pointer-events: none;
             z-index: 0;
         }
-
+        
         /* Typing Animation */
         .typing-cursor {
             display: inline-block;
@@ -81,20 +77,12 @@
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             animation: blink 1s infinite;
         }
-
+        
         @keyframes blink {
-
-            0%,
-            50% {
-                opacity: 1;
-            }
-
-            51%,
-            100% {
-                opacity: 0;
-            }
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
         }
-
+        
         /* Modern Card Styles */
         .modern-card {
             background: rgba(15, 23, 42, 0.8);
@@ -102,28 +90,28 @@
             border: 1px solid rgba(148, 163, 184, 0.2);
             transition: all 0.3s ease;
         }
-
+        
         .modern-card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
             transform: translateY(-4px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-
+        
         .skill-card {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             transition: all 0.3s ease;
         }
-
+        
         .skill-card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
-
+        
         .project-card {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
@@ -132,14 +120,14 @@
             min-width: 400px;
             max-width: 400px;
         }
-
+        
         .project-card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
             transform: translateY(-4px) scale(1.05);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-
+        
         /* Projects Container */
         .projects-container {
             display: flex;
@@ -150,11 +138,11 @@
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-
+        
         .projects-container::-webkit-scrollbar {
             display: none;
         }
-
+        
         /* Scroll Buttons */
         .scroll-button {
             position: absolute;
@@ -175,7 +163,7 @@
             z-index: 10;
             color: #e2e8f0;
         }
-
+        
         .scroll-button:hover {
             background: rgba(30, 41, 59, 0.9);
             border-color: rgba(99, 102, 241, 0.5);
@@ -183,21 +171,21 @@
             transform: translateY(-50%) scale(1.1);
             color: #6366f1;
         }
-
+        
         .scroll-button.left {
             left: 1rem;
         }
-
+        
         .scroll-button.right {
             right: 1rem;
         }
-
+        
         .scroll-button:disabled {
             opacity: 0.3;
             cursor: not-allowed;
             transform: translateY(-50%) scale(0.9);
         }
-
+        
         /* Header Styles */
         .header-scrolled {
             background: rgba(15, 23, 42, 0.95);
@@ -205,7 +193,7 @@
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid rgba(148, 163, 184, 0.2);
         }
-
+        
         /* Experience Cards */
         .experience-card {
             background: rgba(15, 23, 42, 0.8);
@@ -215,13 +203,13 @@
             padding: 2rem;
             transition: all 0.3s ease;
         }
-
+        
         .experience-card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
-
+        
         /* Highlight Cards */
         .highlight-card {
             background: rgba(15, 23, 42, 0.8);
@@ -231,14 +219,14 @@
             padding: 1.5rem;
             transition: all 0.3s ease;
         }
-
+        
         .highlight-card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
             transform: translateY(-2px) scale(1.05);
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
-
+        
         /* Contact Info Cards */
         .contact-info-card {
             background: rgba(15, 23, 42, 0.8);
@@ -248,12 +236,12 @@
             padding: 1.5rem;
             transition: all 0.3s ease;
         }
-
+        
         .contact-info-card:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
         }
-
+        
         /* Button Styles */
         .btn-primary {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -264,12 +252,12 @@
             transition: all 0.2s ease;
             box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
         }
-
+        
         .btn-primary:hover {
             box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
             transform: translateY(-2px) scale(1.05);
         }
-
+        
         .btn-secondary {
             background: rgba(15, 23, 42, 0.8);
             backdrop-filter: blur(12px);
@@ -281,19 +269,19 @@
             border: 1px solid rgba(148, 163, 184, 0.3);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
-
+        
         .btn-secondary:hover {
             background: rgba(30, 41, 59, 0.8);
             border-color: rgba(99, 102, 241, 0.5);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
             transform: translateY(-2px) scale(1.05);
         }
-
+        
         /* Gradient Backgrounds */
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
-
+        
         /* Scroll Indicators */
         .projects-scroll-indicator {
             display: flex;
@@ -301,7 +289,7 @@
             gap: 0.5rem;
             margin-top: 2rem;
         }
-
+        
         .scroll-dot {
             width: 8px;
             height: 8px;
@@ -310,12 +298,12 @@
             transition: all 0.2s ease;
             cursor: pointer;
         }
-
+        
         .scroll-dot.active {
             background: #6366f1;
             transform: scale(1.2);
         }
-
+        
         /* Progress Bars */
         .progress-bar {
             background: rgba(148, 163, 184, 0.2);
@@ -323,13 +311,13 @@
             height: 8px;
             overflow: hidden;
         }
-
+        
         .progress-fill {
             height: 100%;
             border-radius: 9999px;
             transition: all 1s ease-out;
         }
-
+        
         /* Gradient Text */
         .gradient-text {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
@@ -337,7 +325,7 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
-
+        
         /* Achievement Bullets */
         .achievement-bullet {
             width: 8px;
@@ -349,46 +337,38 @@
             flex-shrink: 0;
             transition: transform 0.2s ease;
         }
-
+        
         .achievement-item:hover .achievement-bullet {
             transform: scale(1.5);
         }
     </style>
 </head>
-
 <body class="min-h-screen bg-slate-900 text-white overflow-x-hidden">
     <!-- Particle Background -->
     <canvas id="particle-canvas"></canvas>
-
+    
     {% if profile %}
     <!-- Header -->
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
         <nav class="container mx-auto px-6 py-4">
             <div class="flex items-center justify-between">
                 <div class="flex items-center space-x-2 cursor-pointer group" onclick="scrollToSection('hero')">
-                    <div
-                        class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <div class="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
                         <i class="fas fa-database text-white"></i>
                     </div>
                     <span class="text-xl font-bold font-space-grotesk gradient-text">
                         {{ profile.name }}
                     </span>
                 </div>
-
+                
                 <!-- Desktop Navigation -->
                 <div class="hidden md:flex space-x-8">
-                    <a href="#hero"
-                        class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Home</a>
-                    <a href="#about"
-                        class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">About</a>
-                    <a href="#experience"
-                        class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Experience</a>
-                    <a href="#projects"
-                        class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Projects</a>
-                    <a href="#skills"
-                        class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Skills</a>
-                    <a href="#contact"
-                        class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Contact</a>
+                    <a href="#hero" class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Home</a>
+                    <a href="#about" class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">About</a>
+                    <a href="#experience" class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Experience</a>
+                    <a href="#projects" class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Projects</a>
+                    <a href="#skills" class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Skills</a>
+                    <a href="#contact" class="text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium nav-link">Contact</a>
                 </div>
 
                 <!-- Mobile Menu Button -->
@@ -400,18 +380,12 @@
             <!-- Mobile Navigation -->
             <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-slate-800">
                 <div class="flex flex-col space-y-2 pt-4">
-                    <a href="#hero"
-                        class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Home</a>
-                    <a href="#about"
-                        class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">About</a>
-                    <a href="#experience"
-                        class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Experience</a>
-                    <a href="#projects"
-                        class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Projects</a>
-                    <a href="#skills"
-                        class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Skills</a>
-                    <a href="#contact"
-                        class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Contact</a>
+                    <a href="#hero" class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Home</a>
+                    <a href="#about" class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">About</a>
+                    <a href="#experience" class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Experience</a>
+                    <a href="#projects" class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Projects</a>
+                    <a href="#skills" class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Skills</a>
+                    <a href="#contact" class="text-left text-slate-300 hover:text-indigo-400 transition-colors duration-200 font-medium py-2 mobile-link">Contact</a>
                 </div>
             </div>
         </nav>
@@ -422,25 +396,23 @@
         <div class="container mx-auto px-6 relative z-10">
             <div class="text-center max-w-4xl mx-auto">
                 <div class="mb-8">
-                    <div
-                        class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white text-4xl font-bold shadow-2xl animate-pulse">
+                    <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white text-4xl font-bold shadow-2xl animate-pulse">
                         <span class="font-space-grotesk">{{ profile.name|slice:":2"|upper }}</span>
                     </div>
-
-                    <h1
-                        class="text-6xl md:text-8xl font-bold font-space-grotesk mb-6 bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
+                    
+                    <h1 class="text-6xl md:text-8xl font-bold font-space-grotesk mb-6 bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
                         {{ profile.name }}
                     </h1>
-
+                    
                     <div class="text-2xl md:text-4xl mb-8 h-16 flex items-center justify-center">
                         <span class="text-indigo-400 font-semibold font-space-grotesk">
                             <span id="dynamic-role"></span><span class="typing-cursor"></span>
                         </span>
                     </div>
-
+                    
                     <p class="text-lg md:text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed mb-12">
-                        Transforming raw data into actionable insights through scalable pipelines,
-                        advanced analytics, and cloud-native architectures. Building the future of
+                        Transforming raw data into actionable insights through scalable pipelines, 
+                        advanced analytics, and cloud-native architectures. Building the future of 
                         data-driven solutions with cutting-edge technologies.
                     </p>
                 </div>
@@ -450,31 +422,28 @@
                         <i class="fas fa-envelope"></i>
                         <span>Get In Touch</span>
                     </a>
-
+                    
                     <button class="btn-secondary flex items-center space-x-2">
                         <i class="fas fa-download"></i>
                         <span>Download CV</span>
                     </button>
-
+                    
                     {% if profile.github_url %}
-                    <a href="{{ profile.github_url }}" target="_blank"
-                        class="btn-secondary flex items-center space-x-2">
+                    <a href="{{ profile.github_url }}" target="_blank" class="btn-secondary flex items-center space-x-2">
                         <i class="fab fa-github"></i>
                         <span>GitHub</span>
                     </a>
                     {% endif %}
-
+                    
                     {% if profile.linkedin_url %}
-                    <a href="{{ profile.linkedin_url }}" target="_blank"
-                        class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg flex items-center space-x-2">
+                    <a href="{{ profile.linkedin_url }}" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-full font-semibold transition-all duration-200 transform hover:scale-105 hover:shadow-lg flex items-center space-x-2">
                         <i class="fab fa-linkedin"></i>
                         <span>LinkedIn</span>
                     </a>
                     {% endif %}
                 </div>
 
-                <button onclick="scrollToSection('about')"
-                    class="text-slate-400 hover:text-white transition-colors duration-200 animate-bounce">
+                <button onclick="scrollToSection('about')" class="text-slate-400 hover:text-white transition-colors duration-200 animate-bounce">
                     <i class="fas fa-chevron-down text-3xl"></i>
                 </button>
             </div>
@@ -490,7 +459,7 @@
                         About Me
                     </h2>
                     <p class="text-xl text-slate-300 max-w-3xl mx-auto">
-                        A passionate data engineer with a track record of building scalable,
+                        A passionate data engineer with a track record of building scalable, 
                         reliable data infrastructure that powers data-driven decision making.
                     </p>
                 </div>
@@ -505,41 +474,36 @@
                         <p class="text-slate-300 leading-relaxed">{{ profile.about_me_p2 }}</p>
                         {% endif %}
                         <p class="text-slate-300 leading-relaxed">
-                            When I'm not architecting data pipelines, you'll find me mentoring junior engineers,
-                            contributing to open-source projects, or exploring the latest developments in
+                            When I'm not architecting data pipelines, you'll find me mentoring junior engineers, 
+                            contributing to open-source projects, or exploring the latest developments in 
                             data engineering and machine learning.
                         </p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-6">
                         <div class="highlight-card">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
                                 <i class="fas fa-award text-white text-xl"></i>
                             </div>
                             <h4 class="font-semibold text-white mb-2 font-space-grotesk">8+ Years Experience</h4>
-                            <p class="text-sm text-slate-400">Deep expertise in data engineering across multiple
-                                industries</p>
+                            <p class="text-sm text-slate-400">Deep expertise in data engineering across multiple industries</p>
                         </div>
                         <div class="highlight-card">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center mb-4">
                                 <i class="fas fa-bolt text-white text-xl"></i>
                             </div>
                             <h4 class="font-semibold text-white mb-2 font-space-grotesk">Performance Focused</h4>
                             <p class="text-sm text-slate-400">Optimized pipelines processing 10TB+ daily</p>
                         </div>
                         <div class="highlight-card">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mb-4">
                                 <i class="fas fa-users text-white text-xl"></i>
                             </div>
                             <h4 class="font-semibold text-white mb-2 font-space-grotesk">Team Leadership</h4>
                             <p class="text-sm text-slate-400">Led cross-functional teams of 12+ engineers</p>
                         </div>
                         <div class="highlight-card">
-                            <div
-                                class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4">
                                 <i class="fas fa-bullseye text-white text-xl"></i>
                             </div>
                             <h4 class="font-semibold text-white mb-2 font-space-grotesk">Business Impact</h4>
@@ -548,25 +512,21 @@
                     </div>
                 </div>
 
-                <div
-                    class="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-3xl p-12 border border-slate-700">
+                <div class="bg-gradient-to-r from-slate-800/50 to-slate-700/50 backdrop-blur-sm rounded-3xl p-12 border border-slate-700">
                     <h3 class="text-3xl font-semibold font-space-grotesk text-white mb-8 text-center">
                         What Drives Me
                     </h3>
                     <div class="grid md:grid-cols-3 gap-8">
                         <div class="text-center group">
-                            <h4
-                                class="font-semibold text-white mb-3 font-space-grotesk text-xl group-hover:text-indigo-400 transition-colors">
+                            <h4 class="font-semibold text-white mb-3 font-space-grotesk text-xl group-hover:text-indigo-400 transition-colors">
                                 Innovation
                             </h4>
                             <p class="text-slate-300 leading-relaxed">
-                                Constantly exploring new technologies and methodologies to solve complex data
-                                challenges.
+                                Constantly exploring new technologies and methodologies to solve complex data challenges.
                             </p>
                         </div>
                         <div class="text-center group">
-                            <h4
-                                class="font-semibold text-white mb-3 font-space-grotesk text-xl group-hover:text-indigo-400 transition-colors">
+                            <h4 class="font-semibold text-white mb-3 font-space-grotesk text-xl group-hover:text-indigo-400 transition-colors">
                                 Impact
                             </h4>
                             <p class="text-slate-300 leading-relaxed">
@@ -574,8 +534,7 @@
                             </p>
                         </div>
                         <div class="text-center group">
-                            <h4
-                                class="font-semibold text-white mb-3 font-space-grotesk text-xl group-hover:text-indigo-400 transition-colors">
+                            <h4 class="font-semibold text-white mb-3 font-space-grotesk text-xl group-hover:text-indigo-400 transition-colors">
                                 Excellence
                             </h4>
                             <p class="text-slate-300 leading-relaxed">
@@ -607,14 +566,13 @@
                     <div class="experience-card">
                         <div class="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
                             <div class="mb-4 lg:mb-0">
-                                <h3 class="text-2xl font-semibold text-white mb-2 font-space-grotesk">{{ exp.title }}
-                                </h3>
+                                <h3 class="text-2xl font-semibold text-white mb-2 font-space-grotesk">{{ exp.title }}</h3>
                                 <h4 class="text-xl text-indigo-400 mb-2 font-medium">{{ exp.company }}</h4>
                             </div>
                             <div class="flex flex-col lg:items-end space-y-2">
                                 <div class="flex items-center text-slate-300">
                                     <i class="fas fa-calendar-alt mr-2"></i>
-                                    <span class="font-mono">{{ exp.start_date | date:"Y" }} - {{ exp.end_date | date:"Y" | default:"Present" }}</span>
+                                    <span class="font-mono">{{ exp.start_date|date:"Y" }} - {{ exp.end_date|date:"Y"|default:"Present" }}</span>
                                 </div>
                                 <div class="flex items-center text-slate-300">
                                     <i class="fas fa-map-marker-alt mr-2"></i>
@@ -622,9 +580,9 @@
                                 </div>
                             </div>
                         </div>
-
+                        
                         <p class="text-slate-300 mb-6 leading-relaxed">{{ exp.summary }}</p>
-
+                        
                         <div>
                             <h5 class="font-semibold text-white mb-4 flex items-center font-space-grotesk">
                                 <i class="fas fa-arrow-trend-up mr-2 text-green-400"></i>
@@ -666,7 +624,7 @@
                     <button id="scroll-left" class="scroll-button left" onclick="scrollProjects('left')">
                         <i class="fas fa-chevron-left"></i>
                     </button>
-
+                    
                     <button id="scroll-right" class="scroll-button right" onclick="scrollProjects('right')">
                         <i class="fas fa-chevron-right"></i>
                     </button>
@@ -676,37 +634,32 @@
                         {% for project in projects %}
                         <div class="project-card rounded-2xl p-8">
                             <div class="flex items-center mb-6">
-                                <div
-                                    class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mr-4">
+                                <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mr-4">
                                     <i class="fas fa-database text-white"></i>
                                 </div>
-                                <h3 class="text-2xl font-semibold text-white font-space-grotesk">{{ project.title }}
-                                </h3>
+                                <h3 class="text-2xl font-semibold text-white font-space-grotesk">{{ project.title }}</h3>
                             </div>
-
+                            
                             <p class="text-slate-300 mb-6 leading-relaxed">{{ project.description }}</p>
-
+                            
                             <div class="mb-6">
                                 <h4 class="font-semibold text-white mb-3 font-space-grotesk">Technologies</h4>
                                 <div class="flex flex-wrap gap-2">
                                     {% for tag in project.tags.all %}
-                                    <span
-                                        class="bg-slate-700/80 text-indigo-300 px-3 py-1 rounded-full text-sm font-mono border border-slate-600">{{ tag.name }}</span>
+                                    <span class="bg-slate-700/80 text-indigo-300 px-3 py-1 rounded-full text-sm font-mono border border-slate-600">{{ tag.name }}</span>
                                     {% endfor %}
                                 </div>
                             </div>
-
+                            
                             <div class="flex space-x-4">
                                 {% if project.github_url %}
-                                <a href="{{ project.github_url }}" target="_blank"
-                                    class="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors">
+                                <a href="{{ project.github_url }}" target="_blank" class="flex items-center space-x-2 text-slate-300 hover:text-white transition-colors">
                                     <i class="fab fa-github"></i>
                                     <span>Code</span>
                                 </a>
                                 {% endif %}
                                 {% if project.live_url %}
-                                <a href="{{ project.live_url }}" target="_blank"
-                                    class="flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
+                                <a href="{{ project.live_url }}" target="_blank" class="flex items-center space-x-2 text-indigo-400 hover:text-indigo-300 transition-colors">
                                     <i class="fas fa-external-link-alt"></i>
                                     <span>Demo</span>
                                 </a>
@@ -755,14 +708,14 @@
                     </h3>
                     <div class="flex flex-wrap justify-center gap-4">
                         {% for tech in additional_technologies %}
-                        <span
-                            class="bg-slate-800/80 text-slate-300 px-4 py-2 rounded-full text-sm font-mono border border-slate-600 hover:border-indigo-500/50 hover:text-white transition-all duration-200 hover:scale-105">
+                        <span class="bg-slate-800/80 text-slate-300 px-4 py-2 rounded-full text-sm font-mono border border-slate-600 hover:border-indigo-500/50 hover:text-white transition-all duration-200 hover:scale-105">
                             {{ tech.name }}
                         </span>
+                        {% empty %}
+                        <p class="text-slate-400">Add technologies from the admin panel.</p>
                         {% endfor %}
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
@@ -787,12 +740,11 @@
                         <h3 class="text-2xl font-semibold text-white font-space-grotesk mb-8">
                             Contact Information
                         </h3>
-
+                        
                         <div class="space-y-6">
                             <div class="contact-info-card">
                                 <div class="flex items-center">
-                                    <div
-                                        class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mr-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mr-4">
                                         <i class="fas fa-envelope text-white"></i>
                                     </div>
                                     <div>
@@ -801,12 +753,11 @@
                                     </div>
                                 </div>
                             </div>
-
+                            
                             {% if profile.phone %}
                             <div class="contact-info-card">
                                 <div class="flex items-center">
-                                    <div
-                                        class="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mr-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mr-4">
                                         <i class="fas fa-phone text-white"></i>
                                     </div>
                                     <div>
@@ -816,12 +767,11 @@
                                 </div>
                             </div>
                             {% endif %}
-
+                            
                             {% if profile.location %}
                             <div class="contact-info-card">
                                 <div class="flex items-center">
-                                    <div
-                                        class="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center mr-4">
+                                    <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-red-500 to-pink-500 flex items-center justify-center mr-4">
                                         <i class="fas fa-map-marker-alt text-white"></i>
                                     </div>
                                     <div>
@@ -837,14 +787,12 @@
                             <h4 class="text-xl font-semibold text-white mb-4 font-space-grotesk">Follow Me</h4>
                             <div class="flex space-x-4">
                                 {% if profile.github_url %}
-                                <a href="{{ profile.github_url }}" target="_blank"
-                                    class="w-12 h-12 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:border-indigo-500/50 transition-all duration-200 hover:scale-110">
+                                <a href="{{ profile.github_url }}" target="_blank" class="w-12 h-12 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:border-indigo-500/50 transition-all duration-200 hover:scale-110">
                                     <i class="fab fa-github"></i>
                                 </a>
                                 {% endif %}
                                 {% if profile.linkedin_url %}
-                                <a href="{{ profile.linkedin_url }}" target="_blank"
-                                    class="w-12 h-12 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:border-indigo-500/50 transition-all duration-200 hover:scale-110">
+                                <a href="{{ profile.linkedin_url }}" target="_blank" class="w-12 h-12 bg-slate-800 border border-slate-700 rounded-xl flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 hover:border-indigo-500/50 transition-all duration-200 hover:scale-110">
                                     <i class="fab fa-linkedin"></i>
                                 </a>
                                 {% endif %}
@@ -854,17 +802,15 @@
 
                     <!-- Contact CTA -->
                     <div class="flex items-center justify-center">
-                        <div
-                            class="text-center bg-gradient-to-br from-slate-800/80 to-slate-700/80 backdrop-blur-sm border border-slate-700 rounded-3xl p-12 hover:border-indigo-500/50 transition-all duration-300">
-                            <div
-                                class="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div class="text-center bg-gradient-to-br from-slate-800/80 to-slate-700/80 backdrop-blur-sm border border-slate-700 rounded-3xl p-12 hover:border-indigo-500/50 transition-all duration-300">
+                            <div class="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-full flex items-center justify-center mx-auto mb-6">
                                 <i class="fas fa-paper-plane text-white text-2xl"></i>
                             </div>
                             <h3 class="text-3xl font-semibold text-white mb-4 font-space-grotesk">
                                 Ready to Start a Project?
                             </h3>
                             <p class="text-slate-300 mb-8 max-w-md leading-relaxed">
-                                I'm currently open to new opportunities and collaborations.
+                                I'm currently open to new opportunities and collaborations. 
                                 Let's discuss how I can help bring your data vision to life.
                             </p>
                             <a href="mailto:{{ profile.email }}" class="btn-primary inline-flex items-center space-x-2">
@@ -901,14 +847,13 @@
     </footer>
 
     {% else %}
-    <div class="min-h-screen flex items-center justify-center text-center">
-        <div>
-            <h1 class="text-4xl font-bold text-white">Portfolio Not Configured</h1>
-            <p class="text-slate-300 mt-4">Please log in to the admin panel and create a Profile to activate the site.
-            </p>
-            <a href="/admin" class="mt-8 inline-block btn-primary">Go to Admin</a>
+        <div class="min-h-screen flex items-center justify-center text-center">
+            <div>
+                <h1 class="text-4xl font-bold text-white">Portfolio Not Configured</h1>
+                <p class="text-slate-300 mt-4">Please log in to the admin panel and create a Profile to activate the site.</p>
+                <a href="/admin" class="mt-8 inline-block btn-primary">Go to Admin</a>
+            </div>
         </div>
-    </div>
     {% endif %}
 
     <script>
@@ -1012,7 +957,7 @@
                     if (element) {
                         const offsetTop = element.offsetTop;
                         const offsetHeight = element.offsetHeight;
-
+                        
                         if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
                             if (activeSection !== section) {
                                 activeSection = section;
@@ -1072,7 +1017,7 @@
                 const roles = [
                     'Data Engineer',
                     'Data Scientist',
-                    'Cloud Architect',
+                    'Cloud Architect', 
                     'Pipeline Specialist',
                     'Data Infrastructure Expert',
                     'Python Developer'
@@ -1101,7 +1046,7 @@
                         roleIndex = (roleIndex + 1) % roles.length;
                         typeSpeed = 500;
                     }
-
+                    
                     setTimeout(typeEffect, typeSpeed);
                 }
                 typeEffect();
@@ -1130,7 +1075,7 @@
             const leftBtn = document.getElementById('scroll-left');
             const rightBtn = document.getElementById('scroll-right');
             const indicatorsContainer = document.getElementById('scroll-indicators');
-
+            
             if (!container) return;
 
             const projects = container.children;
@@ -1152,7 +1097,7 @@
             function updateButtons() {
                 if (leftBtn) leftBtn.disabled = currentIndex <= 0;
                 if (rightBtn) rightBtn.disabled = currentIndex >= maxIndex;
-
+                
                 // Update indicators
                 const dots = indicatorsContainer?.children;
                 if (dots) {
@@ -1182,7 +1127,7 @@
             });
 
             // Make scroll functions global
-            window.scrollProjects = function (direction) {
+            window.scrollProjects = function(direction) {
                 if (direction === 'left') {
                     scrollToIndex(currentIndex - 1);
                 } else {
@@ -1213,5 +1158,4 @@
         }
     </script>
 </body>
-
 </html>
