@@ -1,12 +1,15 @@
 from django.contrib import admin
 from django.urls import path, include
 
-# This is the main URL configuration for the entire project.
+# Imports add karein
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
-    # The path for the Django admin site.
     path('admin/', admin.site.urls),
-    
-    # This line tells Django that for any URL that isn't 'admin/',
-    # it should look for further instructions in the 'portfolio_app.urls' file.
     path('', include('portfolio_app.urls')),
 ]
+
+# Yeh hissa add karein
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
