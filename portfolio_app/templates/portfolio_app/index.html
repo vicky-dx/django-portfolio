@@ -5,166 +5,676 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% if profile %}
-        <title>{{ profile.name }} - Portfolio</title>
+        <title>{{ profile.name }} - Senior Data Engineer</title>
+        <meta name="description" content="Senior Data Engineer specializing in scalable data pipelines, cloud architecture, and data infrastructure. Building the future of data-driven solutions." />
     {% else %}
         <title>Data Engineer Portfolio</title>
+        <meta name="description" content="Professional Data Engineer Portfolio" />
     {% endif %}
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+
     
-    <!-- Link to your new static CSS file -->
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: #3b82f6;
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+        
+        .skill-card {
+            background: rgba(249, 250, 251, 0.05);
+            border: 1px solid rgba(249, 250, 251, 0.1);
+            transition: all 0.2s ease;
+        }
+        
+        .skill-card:hover {
+            background: rgba(249, 250, 251, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .project-card {
+            background: rgba(249, 250, 251, 0.05);
+            border: 1px solid rgba(249, 250, 251, 0.1);
+            transition: all 0.2s ease;
+            min-width: 400px;
+            max-width: 400px;
+        }
+        
+        .project-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+        
+        .projects-container {
+            display: flex;
+            gap: 2rem;
+            overflow-x: auto;
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        
+        .projects-container::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .scroll-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+        }
+        
+        .scroll-button:hover {
+            background: rgba(255, 255, 255, 1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-50%) scale(1.1);
+        }
+        
+        .scroll-button.left {
+            left: 1rem;
+        }
+        
+        .scroll-button.right {
+            right: 1rem;
+        }
+        
+        .scroll-button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: translateY(-50%) scale(0.9);
+        }
+        
+        .header-scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-scrolled .text-white {
+            color: #1f2937 !important;
+        }
+        
+        .header-scrolled .text-gray-300 {
+            color: #6b7280 !important;
+        }
+        
+        .header-scrolled .text-gray-300:hover {
+            color: #3b82f6 !important;
+        }
+        
+        .experience-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            transition: all 0.2s ease;
+        }
+        
+        .experience-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .highlight-card {
+            background: rgba(249, 250, 251, 0.5);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.2s ease;
+        }
+        
+        .highlight-card:hover {
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info-card {
+            background: rgba(249, 250, 251, 0.5);
+            border-radius: 8px;
+            padding: 1rem;
+            transition: all 0.2s ease;
+        }
+        
+        .contact-info-card:hover {
+            background: rgba(249, 250, 251, 0.7);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, #3b82f6, #14b8a6);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+        }
+        
+        .btn-primary:hover {
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .btn-secondary {
+            background: #1f2937;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 9999px;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(31, 41, 55, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: #111827;
+            box-shadow: 0 8px 25px rgba(31, 41, 55, 0.4);
+            transform: translateY(-2px);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .hero-pattern {
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239CA3AF' fill-opacity='0.05'%3E%3Ccircle cx='7' cy='7' r='1'/%3E%3Ccircle cx='37' cy='7' r='1'/%3E%3Ccircle cx='7' cy='37' r='1'/%3E%3Ccircle cx='37' cy='37' r='1'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+        
+        .projects-scroll-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .scroll-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: rgba(59, 130, 246, 0.3);
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .scroll-dot.active {
+            background: #3b82f6;
+            transform: scale(1.2);
+        }
+    </style>
 </head>
-<body>
+<body class="min-h-screen">
     {% if profile %}
+    <!-- Header -->
     <header id="main-header" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold text-white">{{ profile.name }}</a>
-            <nav class="hidden md:flex space-x-8">
-                <a href="#about" class="text-gray-300 hover:text-accent">About</a>
-                <a href="#skills" class="text-gray-300 hover:text-accent">Skills</a>
-                <a href="#experience" class="text-gray-300 hover:text-accent">Experience</a>
-                <a href="#projects" class="text-gray-300 hover:text-accent">Projects</a>
-                <a href="#contact" class="text-gray-300 hover:text-accent">Contact</a>
-            </nav>
-            <button id="mobile-menu-btn" class="md:hidden text-white focus:outline-none">
-                <i class="fas fa-bars text-2xl"></i>
-            </button>
-        </div>
-        <div id="mobile-menu" class="hidden md:hidden bg-gray-800">
-            <a href="#about" class="block py-2 px-6 text-gray-300 hover:bg-gray-700 mobile-link">About</a>
-            <a href="#skills" class="block py-2 px-6 text-gray-300 hover:bg-gray-700 mobile-link">Skills</a>
-            <a href="#experience" class="block py-2 px-6 text-gray-300 hover:bg-gray-700 mobile-link">Experience</a>
-            <a href="#projects" class="block py-2 px-6 text-gray-300 hover:bg-gray-700 mobile-link">Projects</a>
-            <a href="#contact" class="block py-2 px-6 text-gray-300 hover:bg-gray-700 mobile-link">Contact</a>
-        </div>
+        <nav class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-teal-600 bg-clip-text text-transparent">
+                    {{ profile.name }}
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="#hero" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Home</a>
+                    <a href="#about" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">About</a>
+                    <a href="#experience" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Experience</a>
+                    <a href="#projects" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Projects</a>
+                    <a href="#skills" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Skills</a>
+                    <a href="#contact" class="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium">Contact</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700 hover:text-blue-600 transition-colors">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+
+            <!-- Mobile Navigation -->
+            <div id="mobile-menu" class="hidden md:hidden mt-4 pb-4 border-t border-gray-200">
+                <div class="flex flex-col space-y-2 pt-4">
+                    <a href="#hero" class="text-left text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium py-2 mobile-link">Home</a>
+                    <a href="#about" class="text-left text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium py-2 mobile-link">About</a>
+                    <a href="#experience" class="text-left text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium py-2 mobile-link">Experience</a>
+                    <a href="#projects" class="text-left text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium py-2 mobile-link">Projects</a>
+                    <a href="#skills" class="text-left text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium py-2 mobile-link">Skills</a>
+                    <a href="#contact" class="text-left text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium py-2 mobile-link">Contact</a>
+                </div>
+            </div>
+        </nav>
     </header>
 
-    <main class="container mx-auto px-6">
+    <!-- Hero Section -->
+    <section id="hero" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <!-- Background -->
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-teal-50"></div>
+        <div class="absolute inset-0 hero-pattern"></div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <div class="mb-8">
+                    <div class="w-32 h-32 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-teal-500 flex items-center justify-center text-white text-4xl font-bold shadow-xl">
+                        {{ profile.name|slice:":2"|upper }}
+                    </div>
+                    <h1 class="text-5xl md:text-7xl font-bold text-gray-800 mb-4">
+                        {{ profile.name }}
+                    </h1>
+                    <h2 class="text-2xl md:text-3xl text-gray-600 mb-6">
+                        <span id="dynamic-role" class="text-blue-600 font-semibold"></span><span class="typing-cursor"></span>
+                    </h2>
+                    <p class="text-lg md:text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed">
+                        Transforming raw data into actionable insights through scalable data pipelines, 
+                        advanced analytics, and cloud-native architectures. Passionate about building 
+                        robust data infrastructure that drives business decisions.
+                    </p>
+                </div>
 
-        <section id="hero" class="min-h-screen flex items-center">
-            <div class="max-w-3xl">
-                <h1 class="text-5xl md:text-7xl font-bold text-white leading-tight">
-                    Hi, I'm <span class="text-accent">{{ profile.name }}</span>
-                </h1>
-                <p class="mt-6 text-lg md:text-xl text-gray-400">
-                    A passionate <span id="dynamic-role" class="text-white font-semibold"></span><span class="typing-cursor"></span> with a love for building scalable data pipelines and transforming data into meaningful insights.
-                </p>
-                <div class="mt-8 flex space-x-6">
-                    {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" class="text-gray-400 hover:text-accent text-3xl"><i class="fab fa-github"></i></a>{% endif %}
-                    {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" class="text-gray-400 hover:text-accent text-3xl"><i class="fab fa-linkedin"></i></a>{% endif %}
-                    {% if profile.resume_url %}<a href="{{ profile.resume_url }}" target="_blank" class="text-gray-400 hover:text-accent text-3xl"><i class="fas fa-file-alt"></i></a>{% endif %}
+                <div class="flex justify-center space-x-6 mb-12">
+                    <a href="mailto:{{ profile.email }}" class="btn-primary flex items-center space-x-2">
+                        <i class="fas fa-envelope"></i>
+                        <span>Get In Touch</span>
+                    </a>
+                    {% if profile.github_url %}
+                    <a href="{{ profile.github_url }}" target="_blank" class="btn-secondary flex items-center space-x-2">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </a>
+                    {% endif %}
+                    {% if profile.linkedin_url %}
+                    <a href="{{ profile.linkedin_url }}" target="_blank" class="bg-blue-700 text-white px-8 py-3 rounded-full hover:bg-blue-800 transition-colors duration-200 shadow-lg hover:shadow-xl flex items-center space-x-2">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </a>
+                    {% endif %}
+                </div>
+
+                <button onclick="document.getElementById('about').scrollIntoView({behavior: 'smooth'})" class="text-gray-500 hover:text-blue-600 transition-colors duration-200 animate-bounce">
+                    <i class="fas fa-chevron-down text-3xl"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        About Me
+                    </h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        A passionate data engineer with a track record of building scalable, 
+                        reliable data infrastructure that powers data-driven decision making.
+                    </p>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 items-center mb-16">
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-6">My Journey</h3>
+                        {% if profile.about_me_p1 %}
+                        <p class="text-gray-600 mb-4 leading-relaxed">{{ profile.about_me_p1 }}</p>
+                        {% endif %}
+                        {% if profile.about_me_p2 %}
+                        <p class="text-gray-600 mb-4 leading-relaxed">{{ profile.about_me_p2 }}</p>
+                        {% endif %}
+                        <p class="text-gray-600 leading-relaxed">
+                            When I'm not building data pipelines, you'll find me mentoring junior engineers, 
+                            contributing to open-source projects, or exploring the latest developments in 
+                            data engineering and machine learning.
+                        </p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-6">
+                        <div class="highlight-card">
+                            <div class="mb-4">
+                                <i class="fas fa-award w-8 h-8 text-blue-600 text-3xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">8+ Years Experience</h4>
+                            <p class="text-sm text-gray-600">Deep expertise in data engineering across multiple industries</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="mb-4">
+                                <i class="fas fa-bolt w-8 h-8 text-teal-600 text-3xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Performance Focused</h4>
+                            <p class="text-sm text-gray-600">Optimized data pipelines processing 10TB+ daily</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="mb-4">
+                                <i class="fas fa-users w-8 h-8 text-green-600 text-3xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Team Leadership</h4>
+                            <p class="text-sm text-gray-600">Led cross-functional teams of 12+ engineers</p>
+                        </div>
+                        <div class="highlight-card">
+                            <div class="mb-4">
+                                <i class="fas fa-bullseye w-8 h-8 text-purple-600 text-3xl"></i>
+                            </div>
+                            <h4 class="font-semibold text-gray-800 mb-2">Business Impact</h4>
+                            <p class="text-sm text-gray-600">Delivered solutions saving $2M+ annually</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gradient-to-r from-blue-50 to-teal-50 rounded-2xl p-8 md:p-12">
+                    <h3 class="text-2xl font-semibold text-gray-800 mb-6 text-center">
+                        What Drives Me
+                    </h3>
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <div class="text-center">
+                            <h4 class="font-semibold text-gray-800 mb-2">Innovation</h4>
+                            <p class="text-gray-600">
+                                Constantly exploring new technologies and methodologies to solve complex data challenges.
+                            </p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="font-semibold text-gray-800 mb-2">Impact</h4>
+                            <p class="text-gray-600">
+                                Building data solutions that directly contribute to business growth and success.
+                            </p>
+                        </div>
+                        <div class="text-center">
+                            <h4 class="font-semibold text-gray-800 mb-2">Excellence</h4>
+                            <p class="text-gray-600">
+                                Maintaining high standards in code quality, system reliability, and team collaboration.
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="about" class="py-24 scroll-mt-20">
-            <div class="grid md:grid-cols-5 gap-12 items-center">
-                <div class="md:col-span-2">
-                    <img src="{{ profile.photo_url|default:'https://placehold.co/400x400/1f2937/d1d5db?text=You' }}" alt="{{ profile.name }}" class="rounded-lg w-full h-auto shadow-lg">
+    <!-- Experience Section -->
+    {% if experiences %}
+    <section id="experience" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Experience
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Building robust data solutions across diverse industries and scales
+                    </p>
                 </div>
-                <div class="md:col-span-3">
-                    <h2 class="text-4xl font-bold text-white mb-6">About Me</h2>
-                    {% if profile.about_me_p1 %}<p class="text-gray-400 mb-4">{{ profile.about_me_p1 }}</p>{% endif %}
-                    {% if profile.about_me_p2 %}<p class="text-gray-400">{{ profile.about_me_p2 }}</p>{% endif %}
-                </div>
-            </div>
-        </section>
 
-        {% if skills %}
-        <section id="skills" class="py-24 scroll-mt-20">
-            <h2 class="text-4xl font-bold text-white text-center mb-12">My Skills</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6 max-w-6xl mx-auto">
-                {% for skill in skills %}
-                <div class="skill-card p-6 rounded-lg flex flex-col items-center text-center">
-                    <i class="{{ skill.icon_class }} text-5xl text-accent"></i>
-                    <span class="mt-4 font-semibold text-white">{{ skill.name }}</span>
-                </div>
-                {% endfor %}
-            </div>
-        </section>
-        {% endif %}
-
-        {% if experiences %}
-        <section id="experience" class="py-24 scroll-mt-20">
-            <h2 class="text-4xl font-bold text-white text-center mb-16">Work Experience</h2>
-            <div class="max-w-4xl mx-auto space-y-16">
-                {% for exp in experiences %}
-                <div class="flex flex-col md:flex-row gap-6 md:gap-8">
-                    <div class="w-full md:w-2/3">
-                        <h3 class="text-2xl font-bold text-white">{{ exp.title }}</h3>
-                        <a href="{{ exp.company_url|default:'#' }}" target="_blank" class="text-lg text-accent hover:underline">{{ exp.company }}</a>
-                        <p class="mt-4 text-gray-400">{{ exp.summary }}</p>
-                        <div class="mt-6">
-                            <h4 class="font-semibold text-white flex items-center gap-2"><i class="fas fa-arrow-trend-up text-accent"></i>Key Achievements</h4>
-                            <ul class="mt-3 list-disc list-inside text-gray-400 space-y-2">
+                <div class="space-y-8">
+                    {% for exp in experiences %}
+                    <div class="experience-card">
+                        <div class="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+                            <div>
+                                <h3 class="text-2xl font-semibold text-gray-800 mb-2">{{ exp.title }}</h3>
+                                <h4 class="text-xl text-blue-600 mb-2">{{ exp.company }}</h4>
+                            </div>
+                            <div class="flex flex-col md:items-end space-y-2">
+                                <div class="flex items-center text-gray-600">
+                                    <i class="fas fa-calendar-alt mr-2"></i>
+                                    <span>{{ exp.start_date|date:"Y" }} - {{ exp.end_date|date:"Y"|default:"Present" }}</span>
+                                </div>
+                                <div class="flex items-center text-gray-600">
+                                    <i class="fas fa-map-marker-alt mr-2"></i>
+                                    <span>{{ exp.location }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-600 mb-6">{{ exp.summary }}</p>
+                        
+                        <div>
+                            <h5 class="font-semibold text-gray-800 mb-3 flex items-center">
+                                <i class="fas fa-arrow-trend-up mr-2 text-green-600"></i>
+                                Key Achievements
+                            </h5>
+                            <ul class="space-y-2">
                                 {% for point in exp.get_description_points %}
-                                <li>{{ point }}</li>
+                                <li class="flex items-start">
+                                    <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 mr-3 flex-shrink-0"></div>
+                                    <span class="text-gray-600">{{ point }}</span>
+                                </li>
                                 {% endfor %}
                             </ul>
                         </div>
                     </div>
-                    <div class="w-full md:w-1/3 flex md:flex-col md:items-end text-sm text-gray-500 gap-4 md:gap-2">
-                        <div class="flex items-center gap-2"><i class="fas fa-calendar-alt"></i><span>{{ exp.start_date|date:"Y" }} - {{ exp.end_date|date:"Y"|default:"Present" }}</span></div>
-                        <div class="flex items-center gap-2"><i class="fas fa-map-marker-alt"></i><span>{{ exp.location }}</span></div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Projects Section -->
+    {% if projects %}
+    <section id="projects" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Featured Projects
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Showcasing impactful data engineering solutions that drive business value
+                    </p>
+                </div>
+
+                <div class="relative">
+                    <!-- Scroll Buttons -->
+                    <button id="scroll-left" class="scroll-button left" onclick="scrollProjects('left')">
+                        <i class="fas fa-chevron-left text-gray-600"></i>
+                    </button>
+                    <button id="scroll-right" class="scroll-button right" onclick="scrollProjects('right')">
+                        <i class="fas fa-chevron-right text-gray-600"></i>
+                    </button>
+
+                    <!-- Projects Container -->
+                    <div id="projects-container" class="projects-container">
+                        {% for project in projects %}
+                        <div class="project-card rounded-xl p-8 bg-gray-50">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-database w-8 h-8 text-purple-500 text-3xl mr-3"></i>
+                                <h3 class="text-2xl font-semibold text-gray-800">{{ project.title }}</h3>
+                            </div>
+                            
+                            <p class="text-gray-600 mb-6 leading-relaxed">{{ project.description }}</p>
+                            
+                            <div class="mb-6">
+                                <h4 class="font-semibold text-gray-800 mb-3">Technologies</h4>
+                                <div class="flex flex-wrap gap-2">
+                                    {% for tag in project.tags.all %}
+                                    <span class="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm">{{ tag.name }}</span>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-4">
+                                {% if project.github_url %}
+                                <a href="{{ project.github_url }}" target="_blank" class="flex items-center space-x-2 text-gray-600 hover:text-gray-800 transition-colors">
+                                    <i class="fab fa-github"></i>
+                                    <span>Code</span>
+                                </a>
+                                {% endif %}
+                                {% if project.live_url %}
+                                <a href="{{ project.live_url }}" target="_blank" class="flex items-center space-x-2 text-blue-600 hover:text-blue-800 transition-colors">
+                                    <i class="fas fa-external-link-alt"></i>
+                                    <span>Demo</span>
+                                </a>
+                                {% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Scroll Indicators -->
+                    <div id="scroll-indicators" class="projects-scroll-indicator">
+                        <!-- Dots will be generated by JavaScript -->
                     </div>
                 </div>
-                {% endfor %}
             </div>
-        </section>
-        {% endif %}
+        </div>
+    </section>
+    {% endif %}
 
-        {% if projects %}
-        <section id="projects" class="py-24 scroll-mt-20">
-            <h2 class="text-4xl font-bold text-white text-center mb-12">Projects</h2>
-            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {% for project in projects %}
-                <div class="project-card rounded-lg overflow-hidden flex flex-col">
-                    <img src="https://placehold.co/600x400/111827/818cf8?text={{ project.title|urlencode }}" alt="{{ project.title }}" class="w-full h-56 object-cover">
-                    <div class="p-6 flex flex-col flex-grow">
-                        <h3 class="text-2xl font-bold text-white mb-2">{{ project.title }}</h3>
-                        <p class="text-gray-400 mb-4 flex-grow">{{ project.description }}</p>
-                        <div class="mt-auto flex justify-between items-center">
-                             <div class="flex flex-wrap text-sm text-accent">
-                                {% for tag in project.tags.all %}<span class="mr-3">{{ tag.name }}</span>{% endfor %}
+    <!-- Skills Section -->
+    {% if skills %}
+    <section id="skills" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Skills & Expertise
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Comprehensive technical skills across the modern data engineering stack
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+                    {% for skill in skills %}
+                    <div class="skill-card bg-white rounded-xl p-6 flex flex-col items-center justify-center text-center">
+                        <i class="{{ skill.icon_class }} text-4xl text-blue-600 mb-4"></i>
+                        <span class="font-semibold text-gray-800">{{ skill.name }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl md:text-5xl font-bold text-gray-800 mb-4">
+                        Get In Touch
+                    </h2>
+                    <p class="text-xl text-gray-600">
+                        Let's discuss how we can work together on your next data engineering project
+                    </p>
+                </div>
+
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <!-- Contact Information -->
+                    <div>
+                        <h3 class="text-2xl font-semibold text-gray-800 mb-8">Contact Information</h3>
+                        
+                        <div class="space-y-6 mb-8">
+                            <div class="contact-info-card flex items-center p-4">
+                                <i class="fas fa-envelope w-6 h-6 text-blue-600 text-xl mr-4"></i>
+                                <div>
+                                    <div class="text-sm text-gray-500">Email</div>
+                                    <div class="text-gray-800 font-medium">{{ profile.email }}</div>
+                                </div>
                             </div>
+                            {% if profile.phone %}
+                            <div class="contact-info-card flex items-center p-4">
+                                <i class="fas fa-phone w-6 h-6 text-green-600 text-xl mr-4"></i>
+                                <div>
+                                    <div class="text-sm text-gray-500">Phone</div>
+                                    <div class="text-gray-800 font-medium">{{ profile.phone }}</div>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% if profile.location %}
+                            <div class="contact-info-card flex items-center p-4">
+                                <i class="fas fa-map-marker-alt w-6 h-6 text-red-600 text-xl mr-4"></i>
+                                <div>
+                                    <div class="text-sm text-gray-500">Location</div>
+                                    <div class="text-gray-800 font-medium">{{ profile.location }}</div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800 mb-4">Follow Me</h4>
                             <div class="flex space-x-4">
-                                {% if project.live_url %}<a href="{{ project.live_url }}" target="_blank" class="text-gray-400 hover:text-accent text-xl"><i class="fas fa-external-link-alt"></i></a>{% endif %}
-                                {% if project.github_url %}<a href="{{ project.github_url }}" target="_blank" class="text-gray-400 hover:text-accent text-xl"><i class="fab fa-github"></i></a>{% endif %}
+                                {% if profile.github_url %}
+                                <a href="{{ profile.github_url }}" target="_blank" class="p-3 bg-gray-100 rounded-full text-gray-600 hover:text-gray-900 transition-colors duration-200">
+                                    <i class="fab fa-github text-xl"></i>
+                                </a>
+                                {% endif %}
+                                {% if profile.linkedin_url %}
+                                <a href="{{ profile.linkedin_url }}" target="_blank" class="p-3 bg-gray-100 rounded-full text-gray-600 hover:text-blue-700 transition-colors duration-200">
+                                    <i class="fab fa-linkedin text-xl"></i>
+                                </a>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
+
+                    <!-- Contact CTA -->
+                    <div class="flex items-center justify-center">
+                        <div class="text-center">
+                            <h3 class="text-2xl font-semibold text-gray-800 mb-4">Ready to Start a Project?</h3>
+                            <p class="text-gray-600 mb-8 max-w-md">
+                                I'm currently open to new opportunities and collaborations. 
+                                Let's discuss how I can help bring your data vision to life.
+                            </p>
+                            <a href="mailto:{{ profile.email }}" class="btn-primary inline-flex items-center space-x-2">
+                                <i class="fas fa-paper-plane"></i>
+                                <span>Send Message</span>
+                            </a>
+                        </div>
+                    </div>
                 </div>
-                {% endfor %}
             </div>
-        </section>
-        {% endif %}
+        </div>
+    </section>
 
-        <section id="contact" class="py-24 scroll-mt-20 text-center">
-            <h2 class="text-4xl font-bold text-white mb-4">Get In Touch</h2>
-            <p class="text-lg text-gray-400 max-w-2xl mx-auto mb-8">I'm currently open to new opportunities and collaborations. If you have a project in mind or just want to connect, feel free to send me an email.</p>
-            <a href="mailto:{{ profile.email }}" class="bg-accent text-white font-bold py-3 px-8 rounded-lg hover:opacity-90 transition-opacity">Say Hello</a>
-        </section>
-    </main>
-
-    <footer class="border-t border-gray-800">
-        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
-            <div class="flex justify-center space-x-6 mb-4">
-                {% if profile.github_url %}<a href="{{ profile.github_url }}" target="_blank" class="hover:text-accent text-2xl"><i class="fab fa-github"></i></a>{% endif %}
-                {% if profile.linkedin_url %}<a href="{{ profile.linkedin_url }}" target="_blank" class="hover:text-accent text-2xl"><i class="fab fa-linkedin"></i></a>{% endif %}
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="text-2xl font-bold bg-gradient-to-r from-blue-400 to-teal-400 bg-clip-text text-transparent mb-4">
+                    {{ profile.name }}
+                </div>
+                <p class="text-gray-400 mb-4">
+                    Senior Data Engineer • Building the future of data infrastructure
+                </p>
+                <div class="flex items-center justify-center text-gray-400">
+                    <span>Made with</span>
+                    <i class="fas fa-heart text-red-500 mx-2 animate-pulse"></i>
+                    <span>and lots of coffee</span>
+                </div>
+                <div class="mt-4 text-sm text-gray-500">
+                    © {% now "Y" %} {{ profile.name }}. All rights reserved.
+                </div>
             </div>
-            <p>&copy; {% now "Y" %} {{ profile.name }}. All Rights Reserved.</p>
         </div>
     </footer>
+
     {% else %}
-        <div class="min-h-screen flex items-center justify-center text-center">
+        <div class="min-h-screen flex items-center justify-center text-center bg-gradient-to-br from-blue-50 via-white to-teal-50">
             <div>
-                <h1 class="text-4xl font-bold text-white">Portfolio Not Configured</h1>
-                <p class="text-gray-400 mt-4">Please log in to the admin panel and create a Profile to activate the site.</p>
-                <a href="/admin" class="mt-8 inline-block bg-accent text-white font-bold py-3 px-8 rounded-lg">Go to Admin</a>
+                <h1 class="text-4xl font-bold text-gray-800">Portfolio Not Configured</h1>
+                <p class="text-gray-600 mt-4">Please log in to the admin panel and create a Profile to activate the site.</p>
+                <a href="/admin" class="mt-8 inline-block btn-primary">Go to Admin</a>
             </div>
         </div>
     {% endif %}
@@ -175,21 +685,35 @@
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
             const mobileMenu = document.getElementById('mobile-menu');
 
+            // Mobile menu toggle
             if (mobileMenuBtn) {
-                mobileMenuBtn.addEventListener('click', () => { mobileMenu.classList.toggle('hidden'); });
+                mobileMenuBtn.addEventListener('click', () => {
+                    mobileMenu.classList.toggle('hidden');
+                    const icon = mobileMenuBtn.querySelector('i');
+                    if (mobileMenu.classList.contains('hidden')) {
+                        icon.className = 'fas fa-bars text-2xl';
+                    } else {
+                        icon.className = 'fas fa-times text-2xl';
+                    }
+                });
+
+                // Close mobile menu when clicking on links
                 mobileMenu.addEventListener('click', (e) => {
                     if (e.target.classList.contains('mobile-link')) {
                         mobileMenu.classList.add('hidden');
+                        mobileMenuBtn.querySelector('i').className = 'fas fa-bars text-2xl';
                     }
                 });
             }
 
+            // Header scroll effect
             if (header) {
                 window.addEventListener('scroll', () => {
                     header.classList.toggle('header-scrolled', window.scrollY > 50);
                 });
             }
 
+            // Typing effect for dynamic role
             const dynamicRoleEl = document.getElementById('dynamic-role');
             if (dynamicRoleEl) {
                 const roles = ["Data Engineer", "Python Developer", "Data Architect", "Cloud Specialist", "Problem Solver"];
@@ -222,7 +746,111 @@
                 }
                 typeEffect();
             }
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Projects horizontal scrolling functionality
+            initializeProjectsScrolling();
         });
+
+        function initializeProjectsScrolling() {
+            const container = document.getElementById('projects-container');
+            const leftBtn = document.getElementById('scroll-left');
+            const rightBtn = document.getElementById('scroll-right');
+            const indicatorsContainer = document.getElementById('scroll-indicators');
+            
+            if (!container) return;
+
+            const projects = container.children;
+            const projectWidth = 400 + 32; // card width + gap
+            let currentIndex = 0;
+            const maxIndex = Math.max(0, projects.length - Math.floor(container.offsetWidth / projectWidth));
+
+            // Create scroll indicators
+            if (indicatorsContainer && projects.length > 1) {
+                const dotsCount = Math.ceil(projects.length / Math.floor(container.offsetWidth / projectWidth)) || 1;
+                for (let i = 0; i < dotsCount; i++) {
+                    const dot = document.createElement('div');
+                    dot.className = `scroll-dot ${i === 0 ? 'active' : ''}`;
+                    dot.onclick = () => scrollToIndex(i * Math.floor(container.offsetWidth / projectWidth));
+                    indicatorsContainer.appendChild(dot);
+                }
+            }
+
+            function updateButtons() {
+                if (leftBtn) leftBtn.disabled = currentIndex <= 0;
+                if (rightBtn) rightBtn.disabled = currentIndex >= maxIndex;
+                
+                // Update indicators
+                const dots = indicatorsContainer?.children;
+                if (dots) {
+                    Array.from(dots).forEach((dot, index) => {
+                        const dotIndex = index * Math.floor(container.offsetWidth / projectWidth);
+                        dot.classList.toggle('active', Math.abs(currentIndex - dotIndex) < Math.floor(container.offsetWidth / projectWidth));
+                    });
+                }
+            }
+
+            function scrollToIndex(index) {
+                currentIndex = Math.max(0, Math.min(index, maxIndex));
+                container.scrollTo({
+                    left: currentIndex * projectWidth,
+                    behavior: 'smooth'
+                });
+                updateButtons();
+            }
+
+            // Initial button state
+            updateButtons();
+
+            // Handle scroll events
+            container.addEventListener('scroll', () => {
+                currentIndex = Math.round(container.scrollLeft / projectWidth);
+                updateButtons();
+            });
+
+            // Make scroll functions global
+            window.scrollProjects = function(direction) {
+                if (direction === 'left') {
+                    scrollToIndex(currentIndex - 1);
+                } else {
+                    scrollToIndex(currentIndex + 1);
+                }
+            };
+
+            // Touch/swipe support for mobile
+            let startX = 0;
+            let scrollLeft = 0;
+
+            container.addEventListener('touchstart', (e) => {
+                startX = e.touches[0].pageX - container.offsetLeft;
+                scrollLeft = container.scrollLeft;
+            });
+
+            container.addEventListener('touchmove', (e) => {
+                if (!startX) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - container.offsetLeft;
+                const walk = (x - startX) * 2;
+                container.scrollLeft = scrollLeft - walk;
+            });
+
+            container.addEventListener('touchend', () => {
+                startX = 0;
+            });
+        }
     </script>
 </body>
 </html>

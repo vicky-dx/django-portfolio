@@ -3,9 +3,9 @@ from django.db import models
 class Profile(models.Model):
     """
     A singleton model to store personal information and site-wide settings.
+    (Updated to include phone and location for the new design)
     """
     name = models.CharField(max_length=100)
-    # Using a URL for the photo is more flexible than an ImageField for this use case.
     photo_url = models.URLField(blank=True, help_text="A URL to your profile picture (e.g., from a CDN or another site).")
     about_me_p1 = models.TextField(blank=True, help_text="First paragraph of your 'About Me' section.")
     about_me_p2 = models.TextField(blank=True, help_text="Second paragraph of your 'About Me' section.")
@@ -13,9 +13,11 @@ class Profile(models.Model):
     linkedin_url = models.URLField(blank=True)
     resume_url = models.URLField(blank=True, help_text="A link to your resume PDF.")
     email = models.EmailField(blank=True)
+    phone = models.CharField(max_length=20, blank=True)
+    location = models.CharField(max_length=100, blank=True)
     
     class Meta:
-        verbose_name_plural = "Profile" # Corrects the pluralization in the admin panel
+        verbose_name_plural = "Profile"
 
     def __str__(self):
         return self.name
