@@ -1,6 +1,10 @@
 from django.shortcuts import render
 from .models import Profile, Project, Experience, Skill
 
+import os
+from django.contrib.auth.models import User
+from django.http import HttpResponse
+
 # Create your views here.
 
 def portfolio_view(request):
@@ -27,3 +31,14 @@ def portfolio_view(request):
     
     # Render the request with the template and the context data.
     return render(request, 'portfolio_app/index.html', context)
+
+
+def create_admin_user(request):
+    username = os.getenv("ADMIN_USERNAME")
+    password = os.getenv("ADMIN_PASSWORD")
+    email = os.getenv("ADMIN_EMAIL")
+
+    if not User.objects.filter(username=username).exists():
+        User.objects.create_superuser(username=username, email=email, password=password)
+        return HttpResponse("✅ Admin user created.")
+    return HttpResponse("⚠️ Admin user already exists.")
