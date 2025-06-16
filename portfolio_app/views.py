@@ -7,6 +7,7 @@ from django.http import HttpResponse
 
 # Create your views here.
 
+
 def portfolio_view(request):
     """
     This view fetches all the necessary data from the database,
@@ -32,6 +33,7 @@ def portfolio_view(request):
     
     # Render the request with the template and the context data.
     return render(request, 'portfolio_app/index.html', context)
+
 
 
 def create_admin_user(request):
