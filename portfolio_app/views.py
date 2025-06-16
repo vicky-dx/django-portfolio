@@ -5,13 +5,13 @@ import os
 from django.contrib.auth.models import User
 from django.http import HttpResponse
 
-# Create your views here.
+
 
 
 def portfolio_view(request):
     """
     This view fetches all the necessary data from the database,
-    including the new Profile and AdditionalTech information.
+    including the Profile and its related Highlights.
     """
     # Fetch all objects from the database.
     projects = Project.objects.all()
@@ -19,8 +19,8 @@ def portfolio_view(request):
     skills = Skill.objects.all()
     additional_technologies = AdditionalTech.objects.all()
     
-    # Fetch the first Profile object.
-    profile = Profile.objects.first()
+    # Fetch the first Profile object and prefetch its related highlights for efficiency.
+    profile = Profile.objects.prefetch_related('highlights').first()
 
     # The context dictionary passes all data to the template.
     context = {

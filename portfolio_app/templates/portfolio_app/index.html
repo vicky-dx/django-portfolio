@@ -58,7 +58,6 @@
             font-family: 'JetBrains Mono', monospace;
         }
         
-        /* Particle Background */
         #particle-canvas {
             position: fixed;
             top: 0;
@@ -69,7 +68,6 @@
             z-index: 0;
         }
         
-        /* Typing Animation */
         .typing-cursor {
             display: inline-block;
             width: 2px;
@@ -83,10 +81,13 @@
             51%, 100% { opacity: 0; }
         }
         
-        /* Modern Card Styles */
+        .modern-card, .skill-card, .project-card, .experience-card, .highlight-card, .contact-info-card, .btn-secondary {
+            -webkit-backdrop-filter: blur(12px); /* Safari Compatibility */
+            backdrop-filter: blur(12px);
+        }
+
         .modern-card {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             transition: all 0.3s ease;
         }
@@ -100,7 +101,6 @@
         
         .skill-card {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             transition: all 0.3s ease;
         }
@@ -114,7 +114,6 @@
         
         .project-card {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             transition: all 0.3s ease;
             min-width: 400px;
@@ -128,7 +127,6 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
-        /* Projects Container */
         .projects-container {
             display: flex;
             gap: 2rem;
@@ -143,12 +141,12 @@
             display: none;
         }
         
-        /* Scroll Buttons */
         .scroll-button {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
             background: rgba(15, 23, 42, 0.9);
+            -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(148, 163, 184, 0.3);
             border-radius: 50%;
@@ -186,18 +184,16 @@
             transform: translateY(-50%) scale(0.9);
         }
         
-        /* Header Styles */
         .header-scrolled {
             background: rgba(15, 23, 42, 0.95);
+            -webkit-backdrop-filter: blur(12px);
             backdrop-filter: blur(12px);
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             border-bottom: 1px solid rgba(148, 163, 184, 0.2);
         }
         
-        /* Experience Cards */
         .experience-card {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 16px;
             padding: 2rem;
@@ -210,10 +206,8 @@
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
         }
         
-        /* Highlight Cards */
         .highlight-card {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 16px;
             padding: 1.5rem;
@@ -227,10 +221,8 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
         }
         
-        /* Contact Info Cards */
         .contact-info-card {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             border: 1px solid rgba(148, 163, 184, 0.2);
             border-radius: 16px;
             padding: 1.5rem;
@@ -242,7 +234,6 @@
             border-color: rgba(99, 102, 241, 0.5);
         }
         
-        /* Button Styles */
         .btn-primary {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             color: white;
@@ -260,7 +251,6 @@
         
         .btn-secondary {
             background: rgba(15, 23, 42, 0.8);
-            backdrop-filter: blur(12px);
             color: white;
             padding: 1rem 2rem;
             border-radius: 9999px;
@@ -277,12 +267,10 @@
             transform: translateY(-2px) scale(1.05);
         }
         
-        /* Gradient Backgrounds */
         .gradient-bg {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
         }
         
-        /* Scroll Indicators */
         .projects-scroll-indicator {
             display: flex;
             justify-content: center;
@@ -304,7 +292,6 @@
             transform: scale(1.2);
         }
         
-        /* Progress Bars */
         .progress-bar {
             background: rgba(148, 163, 184, 0.2);
             border-radius: 9999px;
@@ -318,7 +305,6 @@
             transition: all 1s ease-out;
         }
         
-        /* Gradient Text */
         .gradient-text {
             background: linear-gradient(135deg, #6366f1, #8b5cf6);
             -webkit-background-clip: text;
@@ -326,7 +312,6 @@
             background-clip: text;
         }
         
-        /* Achievement Bullets */
         .achievement-bullet {
             width: 8px;
             height: 8px;
@@ -481,34 +466,15 @@
                     </div>
 
                     <div class="grid grid-cols-2 gap-6">
+                        {% for highlight in profile.highlights.all %}
                         <div class="highlight-card">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center mb-4">
-                                <i class="fas fa-award text-white text-xl"></i>
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r {{ highlight.icon_bg_color }} flex items-center justify-center mb-4">
+                                <i class="{{ highlight.icon_class }} text-white text-xl"></i>
                             </div>
-                            <h4 class="font-semibold text-white mb-2 font-space-grotesk">8+ Years Experience</h4>
-                            <p class="text-sm text-slate-400">Deep expertise in data engineering across multiple industries</p>
+                            <h4 class="font-semibold text-white mb-2 font-space-grotesk">{{ highlight.title }}</h4>
+                            <p class="text-sm text-slate-400">{{ highlight.description }}</p>
                         </div>
-                        <div class="highlight-card">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-yellow-500 to-orange-500 flex items-center justify-center mb-4">
-                                <i class="fas fa-bolt text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-semibold text-white mb-2 font-space-grotesk">Performance Focused</h4>
-                            <p class="text-sm text-slate-400">Optimized pipelines processing 10TB+ daily</p>
-                        </div>
-                        <div class="highlight-card">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-green-500 to-emerald-500 flex items-center justify-center mb-4">
-                                <i class="fas fa-users text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-semibold text-white mb-2 font-space-grotesk">Team Leadership</h4>
-                            <p class="text-sm text-slate-400">Led cross-functional teams of 12+ engineers</p>
-                        </div>
-                        <div class="highlight-card">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mb-4">
-                                <i class="fas fa-bullseye text-white text-xl"></i>
-                            </div>
-                            <h4 class="font-semibold text-white mb-2 font-space-grotesk">Business Impact</h4>
-                            <p class="text-sm text-slate-400">Delivered solutions saving $2M+ annually</p>
-                        </div>
+                        {% endfor %}
                     </div>
                 </div>
 
@@ -871,7 +837,10 @@
             };
 
             const createParticles = () => {
-                const particleCount = Math.floor((canvas.width * canvas.height) / 15000);
+                // MOBILE OPTIMIZATION: Use fewer particles on smaller screens
+                const isMobile = window.innerWidth < 768;
+                const particleDensity = isMobile ? 35000 : 15000;
+                const particleCount = Math.floor((canvas.width * canvas.height) / particleDensity);
                 particles.length = 0;
 
                 for (let i = 0; i < particleCount; i++) {

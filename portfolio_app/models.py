@@ -21,6 +21,24 @@ class Profile(models.Model):
     def __str__(self):
         return self.name
 
+class Highlight(models.Model):
+    """
+    Represents a single highlight card in the 'About Me' section.
+    Linked to the Profile.
+    """
+    profile = models.ForeignKey(Profile, related_name='highlights', on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    description = models.CharField(max_length=255)
+    icon_class = models.CharField(max_length=50, help_text="e.g., 'fas fa-award'")
+    icon_bg_color = models.CharField(max_length=50, default='from-blue-500 to-cyan-500', help_text="e.g., 'from-blue-500 to-cyan-500'")
+    display_order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['display_order']
+
+    def __str__(self):
+        return self.title
+
 class Experience(models.Model):
     title = models.CharField(max_length=100)
     company = models.CharField(max_length=100)
@@ -71,6 +89,7 @@ class Tag(models.Model):
 
     def __str__(self):
         return self.name
+
 
 class Project(models.Model):
     title = models.CharField(max_length=100)

@@ -1,10 +1,19 @@
 from django.contrib import admin
-from .models import Profile, Project, Tag, Experience, Skill, AdditionalTech
+from .models import Profile, Highlight, Project, Tag, Experience, Skill, AdditionalTech
 
-# We will create custom admin classes to improve the interface.
+class HighlightInline(admin.TabularInline):
+    """
+    Allows editing of Highlights directly within the Profile admin page.
+    """
+    model = Highlight
+    extra = 1 # Shows one extra blank form for a new highlight
+    ordering = ('display_order',)
 
 class ProfileAdmin(admin.ModelAdmin):
-    pass
+    """
+    Customizes the admin interface for the Profile model.
+    """
+    inlines = [HighlightInline]
 
 class ProjectAdmin(admin.ModelAdmin):
     list_display = ('title', 'display_order')
@@ -24,9 +33,6 @@ class SkillAdmin(admin.ModelAdmin):
     ordering = ('display_order',)
 
 class AdditionalTechAdmin(admin.ModelAdmin):
-    """
-    Customizes the admin interface for the AdditionalTech model.
-    """
     list_display = ('name', 'display_order')
     search_fields = ('name',)
     ordering = ('display_order',)
@@ -39,5 +45,6 @@ admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Experience, ExperienceAdmin)
 admin.site.register(Skill, SkillAdmin)
-admin.site.register(AdditionalTech, AdditionalTechAdmin) # Register the new model
+admin.site.register(AdditionalTech, AdditionalTechAdmin)
 admin.site.register(Tag, TagAdmin)
+# We don't register Highlight directly as it's an inline
