@@ -12,38 +12,19 @@
         <meta name="description" content="Professional Data Engineer Portfolio" />
     {% endif %}
     
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'space-grotesk': ['Space Grotesk', 'sans-serif'],
-                        'inter': ['Inter', 'sans-serif'],
-                        'mono': ['JetBrains Mono', 'monospace'],
-                    },
-                    colors: {
-                        slate: {
-                            850: '#1e293b',
-                            950: '#0f172a',
-                        }
-                    },
-                    animation: {
-                        'pulse': 'pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-                        'bounce': 'bounce 1s infinite',
-                    },
-                    backdropBlur: {
-                        xs: '2px',
-                    }
-                },
-            },
-        }
-    </script>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- Non-Render-Blocking CSS Loading -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"></noscript>
+    
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"></noscript>
+
+    <link rel="preload" href="{% static 'css/styles.css' %}" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="{% static 'css/styles.css' %}"></noscript>
 
     <style>
         body {
@@ -329,8 +310,6 @@
     </style>
 </head>
 <body class="min-h-screen bg-slate-900 text-white overflow-x-hidden">
-    <!-- Particle Background -->
-    <canvas id="particle-canvas"></canvas>
     
     {% if profile %}
     <!-- Header -->
@@ -382,7 +361,7 @@
             <div class="text-center max-w-4xl mx-auto">
                 <div class="mb-8">
                     <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-br from-indigo-500 via-purple-500 to-pink-500 flex items-center justify-center text-white text-4xl font-bold shadow-2xl animate-pulse">
-                        <span class="font-space-grotesk">NC</span>
+                        <span class="font-space-grotesk">{{ profile.name|slice:":2"|upper }}</span>
                     </div>
                     
                     <h1 class="text-6xl md:text-8xl font-bold font-space-grotesk mb-6 bg-gradient-to-r from-white via-indigo-200 to-purple-200 bg-clip-text text-transparent">
@@ -601,7 +580,7 @@
                         <div class="project-card rounded-2xl p-8">
                             <div class="flex items-center mb-6">
                                 <div class="w-12 h-12 rounded-xl bg-gradient-to-r from-purple-500 to-pink-500 flex items-center justify-center mr-4">
-                                    <i class="fas fa-cogs text-white"></i>
+                                    <i class="fas fa-database text-white"></i>
                                 </div>
                                 <h3 class="text-2xl font-semibold text-white font-space-grotesk">{{ project.title }}</h3>
                             </div>
@@ -823,81 +802,6 @@
     {% endif %}
 
     <script>
-        // Particle Background
-        function initParticleBackground() {
-            const canvas = document.getElementById('particle-canvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            let animationFrameId;
-            const particles = [];
-
-            const resizeCanvas = () => {
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            };
-
-            const createParticles = () => {
-                // MOBILE OPTIMIZATION: Use fewer particles on smaller screens
-                const isMobile = window.innerWidth < 768;
-                const particleDensity = isMobile ? 35000 : 15000;
-                const particleCount = Math.floor((canvas.width * canvas.height) / particleDensity);
-                particles.length = 0;
-
-                for (let i = 0; i < particleCount; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        dx: (Math.random() - 0.5) * 0.5,
-                        dy: (Math.random() - 0.5) * 0.5,
-                        size: Math.random() * 2 + 1,
-                        opacity: Math.random() * 0.5 + 0.2,
-                    });
-                }
-            };
-
-            const drawParticles = () => {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                particles.forEach((particle) => {
-                    ctx.beginPath();
-                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                    ctx.fillStyle = `rgba(99, 102, 241, ${particle.opacity})`;
-                    ctx.fill();
-                });
-            };
-
-            const updateParticles = () => {
-                particles.forEach((particle) => {
-                    particle.x += particle.dx;
-                    particle.y += particle.dy;
-
-                    if (particle.x < 0) particle.x = canvas.width;
-                    if (particle.x > canvas.width) particle.x = 0;
-                    if (particle.y < 0) particle.y = canvas.height;
-                    if (particle.y > canvas.height) particle.y = 0;
-                });
-            };
-
-            const animate = () => {
-                updateParticles();
-                drawParticles();
-                animationFrameId = requestAnimationFrame(animate);
-            };
-
-            const init = () => {
-                resizeCanvas();
-                createParticles();
-                animate();
-            };
-
-            init();
-
-            window.addEventListener('resize', () => {
-                resizeCanvas();
-                createParticles();
-            });
-        }
-
         // Scroll to section function
         function scrollToSection(sectionId) {
             const element = document.getElementById(sectionId);
@@ -907,8 +811,6 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            // Initialize particle background
-            initParticleBackground();
 
             const header = document.getElementById('main-header');
             const mobileMenuBtn = document.getElementById('mobile-menu-btn');
@@ -1039,91 +941,69 @@
             initializeProjectsScrolling();
         });
 
+        // OPTIMIZED Project Scroller using Intersection Observer
         function initializeProjectsScrolling() {
             const container = document.getElementById('projects-container');
+            if (!container || container.children.length <= 1) return;
+
+            const projects = Array.from(container.children);
             const leftBtn = document.getElementById('scroll-left');
             const rightBtn = document.getElementById('scroll-right');
             const indicatorsContainer = document.getElementById('scroll-indicators');
-            
-            if (!container) return;
 
-            const projects = container.children;
-            const projectWidth = 400 + 32; // card width + gap
-            let currentIndex = 0;
-            const maxIndex = Math.max(0, projects.length - Math.floor(container.offsetWidth / projectWidth));
-
-            // Create scroll indicators
-            if (indicatorsContainer && projects.length > 1) {
-                const dotsCount = Math.ceil(projects.length / Math.floor(container.offsetWidth / projectWidth)) || 1;
-                for (let i = 0; i < dotsCount; i++) {
+            // Create indicator dots
+            if (indicatorsContainer) {
+                projects.forEach((_, index) => {
                     const dot = document.createElement('div');
-                    dot.className = `scroll-dot ${i === 0 ? 'active' : ''}`;
-                    dot.onclick = () => scrollToIndex(i * Math.floor(container.offsetWidth / projectWidth));
+                    dot.className = 'scroll-dot';
+                    dot.onclick = () => {
+                        projects[index].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                    };
                     indicatorsContainer.appendChild(dot);
-                }
-            }
-
-            function updateButtons() {
-                if (leftBtn) leftBtn.disabled = currentIndex <= 0;
-                if (rightBtn) rightBtn.disabled = currentIndex >= maxIndex;
-                
-                // Update indicators
-                const dots = indicatorsContainer?.children;
-                if (dots) {
-                    Array.from(dots).forEach((dot, index) => {
-                        const dotIndex = index * Math.floor(container.offsetWidth / projectWidth);
-                        dot.classList.toggle('active', Math.abs(currentIndex - dotIndex) < Math.floor(container.offsetWidth / projectWidth));
-                    });
-                }
-            }
-
-            function scrollToIndex(index) {
-                currentIndex = Math.max(0, Math.min(index, maxIndex));
-                container.scrollTo({
-                    left: currentIndex * projectWidth,
-                    behavior: 'smooth'
                 });
-                updateButtons();
             }
+            const dots = indicatorsContainer ? Array.from(indicatorsContainer.children) : [];
 
-            // Initial button state
-            updateButtons();
+            const updateUI = (visibleIndex) => {
+                // Update dots
+                dots.forEach((dot, index) => {
+                    dot.classList.toggle('active', index === visibleIndex);
+                });
+                // Update buttons
+                if(leftBtn) leftBtn.disabled = visibleIndex === 0;
+                if(rightBtn) rightBtn.disabled = visibleIndex === projects.length - 1;
+            };
 
-            // Handle scroll events
-            container.addEventListener('scroll', () => {
-                currentIndex = Math.round(container.scrollLeft / projectWidth);
-                updateButtons();
+            // Use IntersectionObserver for performance
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const visibleIndex = projects.indexOf(entry.target);
+                        updateUI(visibleIndex);
+                    }
+                });
+            }, {
+                root: container,
+                threshold: 0.51 // Fire event when more than 50% of the item is visible
             });
+
+            projects.forEach(project => observer.observe(project));
 
             // Make scroll functions global
             window.scrollProjects = function(direction) {
-                if (direction === 'left') {
-                    scrollToIndex(currentIndex - 1);
-                } else {
-                    scrollToIndex(currentIndex + 1);
+                let currentVisibleIndex = -1;
+                dots.forEach((dot, index) => {
+                    if (dot.classList.contains('active')) {
+                        currentVisibleIndex = index;
+                    }
+                });
+
+                if (direction === 'left' && currentVisibleIndex > 0) {
+                    projects[currentVisibleIndex - 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+                } else if (direction === 'right' && currentVisibleIndex < projects.length - 1) {
+                    projects[currentVisibleIndex + 1].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
                 }
             };
-
-            // Touch/swipe support for mobile
-            let startX = 0;
-            let scrollLeft = 0;
-
-            container.addEventListener('touchstart', (e) => {
-                startX = e.touches[0].pageX - container.offsetLeft;
-                scrollLeft = container.scrollLeft;
-            });
-
-            container.addEventListener('touchmove', (e) => {
-                if (!startX) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - container.offsetLeft;
-                const walk = (x - startX) * 2;
-                container.scrollLeft = scrollLeft - walk;
-            });
-
-            container.addEventListener('touchend', () => {
-                startX = 0;
-            });
         }
     </script>
 </body>
